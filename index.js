@@ -3,7 +3,10 @@ const app = express()
 const readLine = require('readline')
 const fs = require('fs')
 const readAble = fs.createReadStream('bancos.csv')
+const cors = require('cors')
 var mysql = require('mysql');
+
+app.use(cors())
 
 const connection = mysql.createConnection({
     host: 'l6glqt8gsx37y4hs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
@@ -29,24 +32,26 @@ function inserirDados() {
     })
 }
 
-function lerDados(codigo_compensacao, nome_instituicao){
-    connection.query("select * from bancos where codigo_compensacao = ? or nome_instituicao like '%?%'", [codigo_compensacao, nome_instituicao], (error, result, fields) => {
+function lerDados(codigo_compensacao, nome_instituicao) {
+    connection.query("select * from bancos", [codigo_compensacao, nome_instituicao], (error, result, fields) => {
         console.log(result)
+        return result
     })
 }
 
-
-
-
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
     //apagarDados()
     lerDados(1, '')
     //inserirDados()
     res.send('rodou')
 })
 
-app.use('/consultar', async (req, res) => [
+app.get('/consultar', async (req, res) => {
+    connection.query("select * from bancos", (error, result, fields) => {
+        console.log(result)
+        res.json(result)
+    })
     
-])
+})
 
 app.listen(3000)
