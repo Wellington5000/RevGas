@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { BankServiceService } from '../services/bank-service.service';
-
-
-
+import { HttpClient } from '@angular/common/http'
 /**
  * @title Basic use of `<table mat-table>`
  */
@@ -12,17 +9,42 @@ import { BankServiceService } from '../services/bank-service.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  public codigo_compensacao: number | undefined
+  nome_instituicao: string | undefined
+  dataBank: any
+  SERVER_URL = 'http://localhost:3000'
 
   pesquisar(){
-    this.bankService.getBank().subscribe((data) => {
-      this.dataBank = data
-      console.log(this.dataBank)
-    })
+    //REQUISIÇÃO PARA LISTAR TODOS OS BANCOS
+    if(this.codigo_compensacao == undefined && this.nome_instituicao == undefined){
+      this.http.get(`${ this.SERVER_URL }/listagem_bancos`).subscribe((resultado) => {
+        this.dataBank = resultado
+      });
+    }
+    //REQUISIÇÃO PARA BUSCAR PELO CÓDIGO
+    else if(this.codigo_compensacao != undefined && this.nome_instituicao == undefined){
+      this.http.get(`${ this.SERVER_URL }/consultar_codigo/${this.codigo_compensacao}`).subscribe((resultado) => {
+        this.dataBank = resultado
+      });
+      this.codigo_compensacao = undefined
+    }
+    //REQUISIÇÃO PARA BUSCAR PELO CÓDIGO E NOME
+    else if(this.codigo_compensacao != undefined && this.nome_instituicao != undefined){
+      this.http.get(`${ this.SERVER_URL }/consultar/${this.codigo_compensacao}/${this.nome_instituicao}`).subscribe((resultado) => {
+        this.dataBank = resultado
+      });
+      this.codigo_compensacao = undefined
+      this.nome_instituicao = undefined
+    }
+    //REQUISIÇÃO PARA BUSCAR PELO NOME
+    else if(this.codigo_compensacao == undefined && this.nome_instituicao != undefined){
+      this.http.get(`${ this.SERVER_URL }/consultar_nome/${this.nome_instituicao}`).subscribe((resultado) => {
+        this.dataBank = resultado
+      });
+      this.nome_instituicao = undefined
+    }
   }
 
-  dataBank: any
-  constructor(private bankService: BankServiceService){ }
-
+  constructor(private http: HttpClient){ }
   displayedColumns = ['position', 'name'];
-  
 }

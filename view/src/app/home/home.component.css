@@ -1,7 +1,13 @@
+body{
+    background: violet;
+} 
+
 .mat-card{
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: rgb(255, 255, 255);
+    color: rgb(29, 26, 26);
 }
 
 form{
@@ -17,11 +23,21 @@ form{
 table{
     width: 60%;
     height: 500px;
+    display: block;
     overflow: auto;
+    text-align: center;
 }
 
-tbody{
-    overflow-y:scroll;
+th{
+    width: 450px;
+}
+
+#table-header{
+    text-align: center;
+}
+
+#table-header2{
+    text-align: center;
 }
 
 .mat-elevation-z8{
@@ -37,3 +53,5 @@ tbody{
     width: 400px;
     height: 35px;
 }
+
+

@@ -5,9 +5,17 @@ const fs = require('fs')
 const readAble = fs.createReadStream('bancos.csv')
 const cors = require('cors')
 var mysql = require('mysql');
-
+const path = require('path')
+const nomeApp = process.env.npm_package_name
 app.use(cors())
 
+//CONFIGURA ELEMENTOS ESTÁTICOS DO ANGULAR PARA HOSPEDAGEM
+app.use(express.static('./view'));
+app.get('/*', (req, res) =>
+    res.sendFile('index.html', {root: 'view/src/'}),
+);
+
+//CONECTA COM O BANCO EM NUVEM
 const connection = mysql.createConnection({
     host: 'l6glqt8gsx37y4hs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
     user: 'sz5pnypzyjledxux',
@@ -15,43 +23,52 @@ const connection = mysql.createConnection({
     database: 'bo5hdz1baoy2wogt'
 });
 
-
-
+//LÊ DADOS DO CSV E ADICIONA AO BANCO
 function inserirDados() {
     const rl = readLine.createInterface({ input: readAble })
     i = 0
-    rl.on('line', async (line) => {
+    rl.on('line', (line) => {
         line = line.split(',')
         codigo_compensacao = line[0].replace(/\D+/g, '');
         nome_instituicao = line[1].replace(/"/g, '')
         //Insere csv no banco
         if (i != 0) {
-            await connection.query("insert into bancos values (?, ?)", [parseInt(codigo_compensacao), nome_instituicao])
+            connection.query("insert into bancos values (?, ?)", [parseInt(codigo_compensacao), nome_instituicao])
         }
         i++
     })
 }
 
-function lerDados(codigo_compensacao, nome_instituicao) {
-    connection.query("select * from bancos", [codigo_compensacao, nome_instituicao], (error, result, fields) => {
-        console.log(result)
-        return result
-    })
-}
-
-app.get('/', (req, res) => {
-    //apagarDados()
-    lerDados(1, '')
-    //inserirDados()
-    res.send('rodou')
-})
-
-app.get('/consultar', async (req, res) => {
+//Consulta todos os dados
+app.get('/listagem_bancos', (req, res) => {
     connection.query("select * from bancos", (error, result, fields) => {
-        console.log(result)
         res.json(result)
     })
-    
 })
 
-app.listen(3000)
+//consulta apenas pelo código
+app.get('/consultar_codigo/:codigo_compensacao', async (req, res) => {
+    var query = `SELECT * FROM BANCOS WHERE CODIGO_COMPENSACAO = ${req.params.codigo_compensacao}`
+    connection.query(query, (error, result, fields) => {
+        res.json(result)
+    })
+})
+
+//Consulta por código e nome
+app.get('/consultar/:codigo_compensacao/:nome_instituicao', async (req, res) => {
+    console.log(req.params)
+    var query = `SELECT * FROM BANCOS WHERE CODIGO_COMPENSACAO = ${req.params.codigo_compensacao} AND NOME_INSTITUICAO LIKE '%${req.params.nome_instituicao}%'`
+    connection.query(query, (error, result, fields) => {
+        res.json(result)
+    })
+})
+
+//consulta apenas pelo nome
+app.get('/consultar_nome/:nome_instituicao', async (req, res) => {
+    var query = `SELECT * FROM BANCOS WHERE NOME_INSTITUICAO LIKE '%${req.params.nome_instituicao}%'`
+    connection.query(query, (error, result, fields) => {
+        res.json(result)
+    })
+})
+
+app.listen(process.env.PORT || 3000)
