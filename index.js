@@ -10,9 +10,9 @@ const nomeApp = process.env.npm_package_name
 app.use(cors())
 
 //CONFIGURA ELEMENTOS ESTÁTICOS DO ANGULAR PARA HOSPEDAGEM
-app.use(express.static('./view'));
-app.get('/*', (req, res) =>
-    res.sendFile('index.html', {root: 'view/src/'}),
+app.use(express.static('./view/dist/view'));
+app.get('/', (req, res) =>
+    res.sendFile('index.html', {root: 'view/dist/view/'}),
 );
 
 //CONECTA COM O BANCO EM NUVEM
