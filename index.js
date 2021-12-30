@@ -15,6 +15,10 @@ app.get('/', (req, res) =>
     res.sendFile('index.html', {root: 'view/dist/view/'}),
 );
 
+//PERMITE OBTER DADOS DE REQUISIÇÕES POST
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
 //CONECTA COM O BANCO EM NUVEM
 const connection = mysql.createConnection({
     host: 'l6glqt8gsx37y4hs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
@@ -67,6 +71,14 @@ app.get('/consultar/:codigo_compensacao/:nome_instituicao', async (req, res) => 
 app.get('/consultar_nome/:nome_instituicao', async (req, res) => {
     var query = `SELECT * FROM BANCOS WHERE NOME_INSTITUICAO LIKE '%${req.params.nome_instituicao}%'`
     connection.query(query, (error, result, fields) => {
+        res.json(result)
+    })
+})
+
+app.post('/salvar', (req, res) => {
+    var query = `INSERT INTO BANCOS VALUES(${req.body.codigo_compensacao}, '${req.body.nome_instituicao}')`
+    connection.query(query, (error, result) => {
+        console.log(error)
         res.json(result)
     })
 })

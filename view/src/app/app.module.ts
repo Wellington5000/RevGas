@@ -3,8 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { ModalNewBankComponent } from './modal-new-bank/modal-new-bank.component';
 
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatCardModule } from '@angular/material/card'
@@ -12,11 +13,13 @@ import { MatTableModule } from '@angular/material/table'
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog'
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    ModalNewBankComponent
   ],
   imports: [
     BrowserModule,
@@ -27,9 +30,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatTableModule,
     HttpClientModule,
     MatButtonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule,
+    ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ModalNewBankComponent]
 })
 export class AppModule { }

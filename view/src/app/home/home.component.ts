@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ModalNewBankComponent } from '../modal-new-bank/modal-new-bank.component';
 /**
  * @title Basic use of `<table mat-table>`
  */
@@ -9,9 +11,10 @@ import { HttpClient } from '@angular/common/http'
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  public codigo_compensacao: number | undefined
+  codigo_compensacao: number | undefined
   nome_instituicao: string | undefined
   dataBank: any
+  displayedColumns = ['position', 'name'];
   SERVER_URL = 'http://localhost:3000'
 
   pesquisar(){
@@ -45,6 +48,13 @@ export class HomeComponent {
     }
   }
 
-  constructor(private http: HttpClient){ }
-  displayedColumns = ['position', 'name'];
+  constructor(private http: HttpClient, private dialog: MatDialog){ }
+
+  novoBanco(){
+    const dialogConfig = new MatDialogConfig()
+    dialogConfig.disableClose = true
+    dialogConfig.autoFocus = true
+    this.dialog.open(ModalNewBankComponent, dialogConfig)
+  }
+ 
 }
