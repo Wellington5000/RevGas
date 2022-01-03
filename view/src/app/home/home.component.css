@@ -1,5 +1,5 @@
 body{
-    background: violet;
+    background: rgb(0, 0, 0);
 } 
 
 .mat-card{
@@ -8,6 +8,12 @@ body{
     justify-content: center;
     background-color: rgb(255, 255, 255);
     color: rgb(29, 26, 26);
+}
+
+.mat-card img{
+    margin-top: -25px;
+    width: 100px;
+    height: 50px;
 }
 
 form{
@@ -48,10 +54,24 @@ th{
     overflow-y: auto;
 }
 
+
+
 .button{
     margin-left: 5%;
     width: 400px;
     height: 35px;
 }
+
+.button-table{
+    margin-left: 5%;
+    width: 20px;
+    height: 35px;
+}
+
+a{
+    text-decoration: none;
+    margin-right: 10px;
+}
+
 
 

@@ -1,14 +1,17 @@
 .modal-new-bank{
     height: 150px;
-    width: 300px;
+    width: 400px;
 }
 
 mat-form-field{
-    width: 95%;
+    width: 100%;
 }
 
 button{
-    width: 40%;
-    margin-left: 6%;
+    width: 25%;
+}
+
+.mat-raised-button.mat-primary{
+    margin-left: 12%;
 }
 

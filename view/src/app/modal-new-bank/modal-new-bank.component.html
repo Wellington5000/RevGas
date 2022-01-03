@@ -1,16 +1,30 @@
 <h2 mat-dialog-title>Novo Banco</h2>
 
-<mat-dialog-content class="modal-new-bank" >
+
+<mat-dialog-content class="modal-new-bank">
     <mat-form-field>
-        <input matInput placeholder="Código de Compensação" id="codigo_compensacao" name="codigo_compensacao" [(ngModel)]="codigo_compensacao">
+        <input *ngIf="data.salvar; else mostrar" matInput placeholder="Código de Compensação"
+            id="codigo_compensacao" name="codigo_compensacao" [(ngModel)]="data.codigo_compensacao">
+
+        <ng-template #mostrar>
+            <input matInput disabled placeholder="Código de Compensação"
+            id="codigo_compensacao" name="codigo_compensacao" [(ngModel)]="data.codigo_compensacao">
+        </ng-template>
     </mat-form-field>
     <br>
     <mat-form-field>
-        <input matInput placeholder="Nome da Instituição" id="nome_instituicao" name="nome_instituicao" [(ngModel)]="nome_instituicao">
+        <input matInput placeholder="Nome da Instituição" id="nome_instituicao" name="nome_instituicao"
+            [(ngModel)]="data.nome_instituicao">
     </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button class="mat-raised-button"(click)="close()">Fechar</button>
-    <button class="mat-raised-button mat-primary"(click)="save()">Salvar</button>
+    <button class="mat-raised-button" (click)="close()">Fechar</button>
+    <button *ngIf="data.salvar; else showThis" class="mat-raised-button mat-primary" (click)="salvar()">Salvar</button>
+    <ng-template #showThis>
+        <button class="mat-raised-button mat-primary" (click)="deletar()">Deletar</button>
+        <button class="mat-raised-button mat-primary" (click)="atualizar()">Atualizar</button>
+    </ng-template>
+
+
 </mat-dialog-actions>
