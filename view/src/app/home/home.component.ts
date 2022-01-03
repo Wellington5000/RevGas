@@ -22,6 +22,7 @@ export class HomeComponent {
     //REQUISIÇÃO PARA LISTAR TODOS OS BANCOS
     if (this.codigo_compensacao == undefined && this.nome_instituicao == undefined) {
       this.http.get(`${this.SERVER_URL}/listagem_bancos`).subscribe((resultado) => {
+        console.log(resultado)
         this.dataBank = resultado
       });
     }
