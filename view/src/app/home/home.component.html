@@ -1,5 +1,5 @@
 <mat-card class="mat-card">
-    <img src="https://revgas.com/wp-content/uploads/2020/11/logo.png" alt="">
+    <h1>BANCOS</h1>
     <form action="">
         <mat-form-field>
             <input matInput placeholder="Código de Compensação" id="codigo_compensacao" name="codigo_compensacao" [(ngModel)]="codigo_compensacao">
@@ -12,28 +12,6 @@
         <button (click)="novoBanco()" mat-raised-button color="primary" class="button">Novo</button>
     </form>
 </mat-card>
-
-<table mat-table [dataSource]="dataBank" class="mat-elevation-z8" >
-  <ng-container matColumnDef="position" >
-    <th id="table-header" mat-header-cell *matHeaderCellDef>Código Compensação</th>
-    <td mat-cell *matCellDef="let element">{{element.codigo_compensacao}}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="name">
-    <th id="table-header2" mat-header-cell *matHeaderCellDef>Código nCompensação</th>
-    <td mat-cell *matCellDef="let element">{{element.nome_instituicao}}</td>
-  </ng-container>
-
-
-  <ng-container matColumnDef="actions">
-    <th id="table-header3" mat-header-cell *matHeaderCellDef> Ações </th>
-    <td mat-cell *matCellDef="let element">
-        <button (click)="editarBanco(element)" mat-button color="primary" class="button-table">Editar</button>
-    </td>
-</ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
-</table>
 
 <table mat-table [dataSource]="dataBank" class="mat-elevation-z8">
     <ng-container matColumnDef="position">

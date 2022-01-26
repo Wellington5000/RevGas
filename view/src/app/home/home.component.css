@@ -1,6 +1,6 @@
 body{
     background: rgb(0, 0, 0);
-} 
+}
 
 .mat-card{
     display: flex;
@@ -71,6 +71,12 @@ th{
 a{
     text-decoration: none;
     margin-right: 10px;
+}
+
+h1{
+  font: bold;
+  color: rgb(35, 45, 51);
+  margin-top: 10%;
 }
 
 

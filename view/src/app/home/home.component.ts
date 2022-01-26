@@ -16,7 +16,8 @@ export class HomeComponent {
   nome_instituicao: string | undefined
   dataBank: any
   displayedColumns = ['position', 'name', 'actions'];
-  SERVER_URL = 'https://revgas-test.herokuapp.com/'
+
+  SERVER_URL = 'https://revgas-test.herokuapp.com'
 //SERVER_URL = 'http://localhost:3000'
   pesquisar() {
     //REQUISIÇÃO PARA LISTAR TODOS OS BANCOS
