@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog'
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MatDialogModule } from '@angular/material/dialog'
     MatButtonModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent],
